@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
           IconButton(onPressed: () {}, icon: const Icon(Icons.refresh))
         ],
       ),
-      backgroundColor: Color.fromARGB(255, 152, 167, 175),
+      backgroundColor: const Color.fromARGB(255, 152, 167, 175),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         // ignore: prefer_const_literals_to_create_immutables
