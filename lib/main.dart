@@ -14,6 +14,18 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  TextEditingController controladorPeso = TextEditingController();
+  TextEditingController controladorAltura = TextEditingController();
+
+  String _infoText = 'Informe seus dados';
+
+  void _reset() {
+    // ignore: unused_local_variable
+    controladorPeso.text = '';
+    controladorAltura.text = '';
+    _infoText = 'Informe seus dados';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +34,7 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         backgroundColor: Colors.greenAccent,
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.refresh))
+          IconButton(onPressed: _reset, icon: const Icon(Icons.refresh))
         ],
       ),
       backgroundColor: const Color.fromARGB(255, 152, 167, 175),
@@ -37,22 +49,24 @@ class _HomeState extends State<Home> {
               size: 200.0,
               color: Colors.greenAccent,
             ),
-            const TextField(
+            TextField(
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   labelText: "Peso em (Kg)",
                   labelStyle: TextStyle(color: Colors.greenAccent)),
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.greenAccent, fontSize: 25.0),
+              style: const TextStyle(color: Colors.greenAccent, fontSize: 25.0),
+              controller: controladorPeso,
             ),
-            const TextField(
+            TextField(
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Altura (Cm)",
                 labelStyle: TextStyle(color: Colors.greenAccent),
               ),
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.greenAccent, fontSize: 25.0),
+              style: const TextStyle(color: Colors.greenAccent, fontSize: 25.0),
+              controller: controladorAltura,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
@@ -69,8 +83,8 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            const Text(
-              'info',
+            Text(
+              _infoText,
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.greenAccent, fontSize: 25.0),
             ),
