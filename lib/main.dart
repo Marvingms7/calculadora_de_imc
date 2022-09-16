@@ -19,6 +19,8 @@ class _HomeState extends State<Home> {
 
   String _infoText = 'Informe seus dados';
 
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
   void _reset() {
     controladorPeso.text = '';
     controladorAltura.text = '';
@@ -60,55 +62,75 @@ class _HomeState extends State<Home> {
       backgroundColor: const Color.fromARGB(255, 152, 167, 175),
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          // ignore: prefer_const_literals_to_create_immutables
-          children: [
-            const Icon(
-              Icons.person_outline_outlined,
-              size: 200.0,
-              color: Colors.greenAccent,
-            ),
-            TextField(
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                  labelText: "Peso em (Kg)",
-                  labelStyle: TextStyle(color: Colors.greenAccent)),
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.greenAccent, fontSize: 25.0),
-              controller: controladorPeso,
-            ),
-            TextField(
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Altura (Cm)",
-                labelStyle: TextStyle(color: Colors.greenAccent),
+        child: Form(
+          key: _formkey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            // ignore: prefer_const_literals_to_create_immutables
+            children: [
+              const Icon(
+                Icons.person_outline_outlined,
+                size: 200.0,
+                color: Colors.greenAccent,
               ),
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.greenAccent, fontSize: 25.0),
-              controller: controladorAltura,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-              child: SizedBox(
-                height: 70.0,
-                child: ElevatedButton(
-                  onPressed: _calcular,
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.greenAccent),
-                      textStyle: MaterialStateProperty.all(
-                          const TextStyle(fontSize: 25.0))),
-                  child: const Text('Calcular'),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                    labelText: "Peso em (Kg)",
+                    labelStyle: TextStyle(color: Colors.greenAccent)),
+                textAlign: TextAlign.center,
+                style:
+                    const TextStyle(color: Colors.greenAccent, fontSize: 25.0),
+                controller: controladorPeso,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Insira seu Peso';
+                  }
+                },
+              ),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: "Altura em (Cm)",
+                  labelStyle: TextStyle(color: Colors.greenAccent),
+                ),
+                textAlign: TextAlign.center,
+                style:
+                    const TextStyle(color: Colors.greenAccent, fontSize: 25.0),
+                controller: controladorAltura,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Insira sua altura';
+                  }
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                child: SizedBox(
+                  height: 70.0,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formkey.currentState!.validate()) {
+                        _calcular();
+                      }
+                    },
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.greenAccent),
+                        textStyle: MaterialStateProperty.all(
+                            const TextStyle(fontSize: 25.0))),
+                    child: const Text('Calcular'),
+                  ),
                 ),
               ),
-            ),
-            Text(
-              _infoText,
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.greenAccent, fontSize: 25.0),
-            ),
-          ],
+              Text(
+                _infoText,
+                textAlign: TextAlign.center,
+                style:
+                    const TextStyle(color: Colors.greenAccent, fontSize: 25.0),
+              ),
+            ],
+          ),
         ),
       ),
     );
